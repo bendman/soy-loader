@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "description": "soy (google closure) template loader for webpack",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://bendman@github.com/bendman/soy-loader.git"
@@ -21,5 +20,16 @@
   "bugs": {
     "url": "https://github.com/bendman/soy-loader/issues"
   },
-  "homepage": "https://github.com/bendman/soy-loader"
+  "homepage": "https://github.com/bendman/soy-loader",
+  "devDependencies": {
+    "node-libs-browser": "^0.5.0",
+    "webpack": "^1.9.5"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "closure-templates": "^20141017.0.1",
+    "loader-utils": "^0.2.7",
+    "soynode": "^0.7.5",
+    "temp": "^0.8.1"
+  }
 }
