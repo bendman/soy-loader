@@ -1,0 +1,25 @@
+{
+  "name": "soy-loader",
+  "version": "0.0.0",
+  "description": "soy (google closure) template loader for webpack",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bendman@github.com/bendman/soy-loader.git"
+  },
+  "keywords": [
+    "webpack",
+    "loader",
+    "template",
+    "soy",
+    "closure"
+  ],
+  "author": "Ben Duncan @bendman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bendman/soy-loader/issues"
+  },
+  "homepage": "https://github.com/bendman/soy-loader"
+}
