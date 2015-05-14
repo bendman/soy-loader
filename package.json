@@ -22,18 +22,19 @@
   },
   "homepage": "https://github.com/bendman/soy-loader",
   "devDependencies": {
-    "node-libs-browser": "^0.5.0",
+    "node-libs-browser": "^0.5.0"
+  },
+  "peerDependencies": {
+    "exports-loader": "^0.6.2",
     "webpack": "^1.9.5"
   },
   "dependencies": {
     "bluebird": "^2.9.25",
     "closure-templates": "^20141017.0.1",
     "exports-loader": "^0.6.2",
-    "expose-loader": "^0.6.0",
-    "imports-loader": "^0.6.3",
     "loader-utils": "^0.2.7",
-    "script-loader": "^0.6.1",
     "soynode": "^0.7.5",
-    "temp": "^0.8.1"
+    "temp": "^0.8.1",
+    "webpack": "^1.9.5"
   }
 }

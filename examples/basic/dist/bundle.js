@@ -44,10 +44,12 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var renderedGreeting = __webpack_require__(1).hello();
+	var greetPerson = __webpack_require__(1).hello;
 	// => '<h1>Hello World</h1>'
 
-	document.getElementById('target').innerHTML = renderedGreeting;
+	document.getElementById('target').innerHTML = greetPerson({
+		name: 'John'
+	});
 
 
 /***/ },
@@ -77,7 +79,7 @@
 	 * @suppress {checkTypes}
 	 */
 	greetingTemplates.hello = function(opt_data, opt_ignored, opt_ijData) {
-	  return soydata.VERY_UNSAFE.ordainSanitizedHtml('<h1>Hello World</h1>');
+	  return soydata.VERY_UNSAFE.ordainSanitizedHtml('<h1>Hello ' + soy.$$escapeHtml(opt_data.name) + '</h1>');
 	};
 	if (goog.DEBUG) {
 	  greetingTemplates.hello.soyTemplateName = 'greetingTemplates.hello';

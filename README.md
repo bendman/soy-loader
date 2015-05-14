@@ -38,15 +38,17 @@ module.exports = {
 {namespace greetingTemplates}
 
 /**
- * This is an example template without variables.
+ * Greet a person.
+ * @param name the person's first name
  */
 {template .hello}
-<h1>Hello World</h1>
+<h1>Hello {{$name}}</h1>
 {/template}
 ```
 
 **app.js**
 ```javascript
-var renderedGreeting = require('./greetings.soy').hello();
-// => '<h1>Hello World</h1>'
+var greetPerson = require('./greetings.soy').hello;
+target.innerHTML = greetPerson({ name: 'John' });
+// => '<h1>Hello John</h1>'
 ```
