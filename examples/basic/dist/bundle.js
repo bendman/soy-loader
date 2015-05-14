@@ -44,13 +44,49 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var templates = __webpack_require__(1);
+	var renderedGreeting = __webpack_require__(1).hello();
+	// => '<h1>Hello World</h1>'
 
-	document.getElementById('target').innerHTML = templates.greeting();
+	document.getElementById('target').innerHTML = renderedGreeting;
 
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var goog = __webpack_require__(2).goog;
+	var soy = __webpack_require__(2).soy;
+	var soydata = __webpack_require__(2).soydata;
+	var soyshim = __webpack_require__(2).soyshim;
+	var greetingTemplates;
+	// This file was automatically generated from source.soy.
+	// Please don't edit this file by hand.
+
+	/**
+	 * @fileoverview Templates in namespace greetingTemplates.
+	 */
+
+	if (typeof greetingTemplates == 'undefined') { var greetingTemplates = {}; }
+
+
+	/**
+	 * @param {Object.<string, *>=} opt_data
+	 * @param {(null|undefined)=} opt_ignored
+	 * @param {Object.<string, *>=} opt_ijData
+	 * @return {!soydata.SanitizedHtml}
+	 * @suppress {checkTypes}
+	 */
+	greetingTemplates.hello = function(opt_data, opt_ignored, opt_ijData) {
+	  return soydata.VERY_UNSAFE.ordainSanitizedHtml('<h1>Hello World</h1>');
+	};
+	if (goog.DEBUG) {
+	  greetingTemplates.hello.soyTemplateName = 'greetingTemplates.hello';
+	}
+
+	module.exports = greetingTemplates;
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -3381,32 +3417,12 @@
 
 	// END GENERATED CODE
 
-	var mytemplate;
-	// This file was automatically generated from source.soy.
-	// Please don't edit this file by hand.
 
-	/**
-	 * @fileoverview Templates in namespace mytemplate.
-	 */
-
-	if (typeof mytemplate == 'undefined') { var mytemplate = {}; }
-
-
-	/**
-	 * @param {Object.<string, *>=} opt_data
-	 * @param {(null|undefined)=} opt_ignored
-	 * @param {Object.<string, *>=} opt_ijData
-	 * @return {!soydata.SanitizedHtml}
-	 * @suppress {checkTypes}
-	 */
-	mytemplate.greeting = function(opt_data, opt_ignored, opt_ijData) {
-	  return soydata.VERY_UNSAFE.ordainSanitizedHtml('<h1>Hello World</h1>');
-	};
-	if (goog.DEBUG) {
-	  mytemplate.greeting.soyTemplateName = 'mytemplate.greeting';
-	}
-
-	module.exports = mytemplate;
+	/*** EXPORTS FROM exports-loader ***/
+	exports["goog"] = (goog);
+	exports["soy"] = (soy);
+	exports["soydata"] = (soydata);
+	exports["soyshim"] = (soyshim);
 
 /***/ }
 /******/ ]);
