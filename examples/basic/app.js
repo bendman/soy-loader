@@ -1,3 +1,3 @@
 var templates = require('./greeting.soy');
 
-document.getElementById('target').innerHTML = templates.examples.greeting();
+document.getElementById('target').innerHTML = templates.greeting();
