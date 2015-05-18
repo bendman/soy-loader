@@ -19,6 +19,7 @@ module.exports = function(source) {
 	var runtimeUtils = require.resolve(query.utils || closureTemplates['soyutils.js']);
 	// Create a require statement to be injected into the templates for shimming.
 	runtimeUtils = 'require(\'exports?goog,soy,soydata,soyshim!' + runtimeUtils + '\')';
+	runtimeUtils = runtimeUtils.replace(/\\/g, '\\\\');
 
 	this.addDependency(require.resolve(closureTemplates['soyutils.js']));
 	soynode.setOptions({
@@ -33,26 +34,30 @@ module.exports = function(source) {
 	// Compile the templates to a temporary directory for reading.
 	var compileContent = temp.mkdirAsync('soytemp')
 
+		// Get the temp directory path
 		.then(function(dirPath) {
-			// Get the temp directory path
+			// Handle drive letters in windows environments (C:\)
+			if (dirPath.indexOf(':') !== -1) {
+				dirPath = dirPath.split(':')[1];
+			}
 			return path.join(dirPath, 'source.soy');
 
+		// Write the raw source template into the temp directory
 		}).then(function(soyPath) {
-			// Write the raw source template into the temp directory
 			return fs.writeFileAsync(soyPath, source).return(soyPath);
 
+		// Run the compiler on the raw template
 		}).then(function(soyPath) {
-			// Run the compiler on the raw template
 			return soynode.compileTemplateFilesAsync([soyPath]).return(soyPath);
 
+		// Read the newly compiled source
 		}).then(function(soyPath) {
-			// Read the newly compiled source
 			return fs.readFileAsync(soyPath + '.js');
 
+		// Return utils and module return value, shimmed for module encapsulation.
 		}).then(function(template) {
-			// Return utils and module return value, shimmed for module encapsulation.
-			return loaderCallback(null, [
 
+			return loaderCallback(null, [
 				// Shims for encapsulating the soy runtime library. Normally these are exposed globally by
 				// including soyutils.js. Here we encapsulate them and require them in the template.
 				'var goog = ' + runtimeUtils + '.goog;',
