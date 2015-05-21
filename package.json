@@ -33,8 +33,8 @@
     "closure-templates": "^20141017.0.1",
     "exports-loader": "^0.6.2",
     "loader-utils": "^0.2.7",
+    "rimraf": "^2.3.4",
     "soynode": "^0.7.5",
-    "temp": "^0.8.1",
     "webpack": "^1.9.5"
   }
 }

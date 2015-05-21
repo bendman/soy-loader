@@ -3,11 +3,10 @@ var closureTemplates = require('closure-templates');
 var Promise = require('bluebird');
 var soynode = Promise.promisifyAll(require('soynode'));
 var fs = Promise.promisifyAll(require('fs'));
-var temp = Promise.promisifyAll(require('temp'));
+var rimrafAsync = Promise.promisify(require('rimraf'));
 var path = require('path');
 
 // Automatic cleanup of temporary files.
-temp.track();
 
 // Run the loader.
 module.exports = function(source) {
@@ -30,12 +29,18 @@ module.exports = function(source) {
 
 	// Grab namespace for shimming encapsulated module return value.
 	var namespace = /\{namespace\s+(\w+)/.exec(source)[1];
+	var tempDir = path.resolve(__dirname, [
+		'soytemp', // directory prefix
+		Date.now(), // datestamp
+		(Math.random() * 0x100000000 + 1).toString(36) // randomized suffix
+	].join('-'));
 
 	// Compile the templates to a temporary directory for reading.
-	var compileContent = temp.mkdirAsync('soytemp')
+	var compileContent = fs.mkdirAsync(tempDir)
 
 		// Get the temp directory path
-		.then(function(dirPath) {
+		.then(function() {
+			dirPath = tempDir;
 			// Handle drive letters in windows environments (C:\)
 			if (dirPath.indexOf(':') !== -1) {
 				dirPath = dirPath.split(':')[1];
@@ -44,7 +49,7 @@ module.exports = function(source) {
 
 		// Write the raw source template into the temp directory
 		}).then(function(soyPath) {
-			return fs.writeFileAsync(soyPath, source).return(soyPath);
+			return fs.writeFileAsync(path.resolve(soyPath), source).return(soyPath);
 
 		// Run the compiler on the raw template
 		}).then(function(soyPath) {
@@ -52,11 +57,14 @@ module.exports = function(source) {
 
 		// Read the newly compiled source
 		}).then(function(soyPath) {
-			return fs.readFileAsync(soyPath + '.js');
+			return fs.readFileAsync(path.resolve(soyPath) + '.js');
 
+		// Cleanup temp directory
+		}).then(function(template) {
+			return rimrafAsync(tempDir).return(template);
+			
 		// Return utils and module return value, shimmed for module encapsulation.
 		}).then(function(template) {
-
 			return loaderCallback(null, [
 				// Shims for encapsulating the soy runtime library. Normally these are exposed globally by
 				// including soyutils.js. Here we encapsulate them and require them in the template.
