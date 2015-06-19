@@ -59,10 +59,6 @@ module.exports = function(source) {
 		}).then(function(soyPath) {
 			return fs.readFileAsync(path.resolve(soyPath) + '.js');
 
-		// Cleanup temp directory
-		}).then(function(template) {
-			return rimrafAsync(tempDir).return(template);
-			
 		// Return utils and module return value, shimmed for module encapsulation.
 		}).then(function(template) {
 			return loaderCallback(null, [
@@ -79,5 +75,12 @@ module.exports = function(source) {
 				'module.exports = ' + namespace + ';'
 
 			].join('\n'));
+		// Handle any errors
+		}).catch(function(e) {
+			return loaderCallback(e);
+		// Cleanup temp directory
+		}).finally(function(template) {
+			return rimrafAsync(tempDir).return(template);
+			
 		});
 };
