@@ -13,6 +13,7 @@ module.exports = function(source) {
 	if (this.cacheable) this.cacheable();
 	var loaderCallback = this.async();
 	var query = this.query instanceof Object ? this.query : loaderUtils.parseQuery(this.query);
+	var pluginModules = query.pluginModules ? (query.pluginModules instanceof Array ? query.pluginModules : [query.pluginModules]) : [];
 
 	// Get the configurable source of the soy runtime utilities, or use default.
 	var runtimeUtils = require.resolve(query.utils || closureTemplates['soyutils.js']);
@@ -24,7 +25,8 @@ module.exports = function(source) {
 	soynode.setOptions({
 		outputDir: '/',
 		uniqueDir: false,
-		eraseTemporaryFiles: false
+		eraseTemporaryFiles: false,
+		pluginModules: pluginModules
 	});
 
 	// Grab namespace for shimming encapsulated module return value.
