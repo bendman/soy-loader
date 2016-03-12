@@ -13,6 +13,7 @@ module.exports = function(source) {
 	if (this.cacheable) this.cacheable();
 	var loaderCallback = this.async();
 	var query = this.query instanceof Object ? this.query : loaderUtils.parseQuery(this.query);
+	var classpath = query.classpath ? (query.classpath instanceof Array ? query.classpath : [query.classpath]) : [];
 	var pluginModules = query.pluginModules ? (query.pluginModules instanceof Array ? query.pluginModules : [query.pluginModules]) : [];
 
 	// Get the configurable source of the soy runtime utilities, or use default.
@@ -26,6 +27,7 @@ module.exports = function(source) {
 		outputDir: '/',
 		uniqueDir: false,
 		eraseTemporaryFiles: false,
+		classpath: classpath,
 		pluginModules: pluginModules
 	});
 
