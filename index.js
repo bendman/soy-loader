@@ -13,6 +13,7 @@ module.exports = function(source) {
 	if (this.cacheable) this.cacheable();
 	var loaderCallback = this.async();
 	var query = this.query instanceof Object ? this.query : loaderUtils.parseQuery(this.query);
+	var classpath = query.classpath ? (query.classpath instanceof Array ? query.classpath : [query.classpath]) : [];
 
 	// Get the configurable source of the soy runtime utilities, or use default.
 	var runtimeUtils = require.resolve(query.utils || closureTemplates['soyutils.js']);
@@ -24,7 +25,8 @@ module.exports = function(source) {
 	soynode.setOptions({
 		outputDir: '/',
 		uniqueDir: false,
-		eraseTemporaryFiles: false
+		eraseTemporaryFiles: false,
+		classpath: classpath
 	});
 
 	// Grab namespace for shimming encapsulated module return value.
