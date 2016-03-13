@@ -28,7 +28,9 @@ module.exports = function(source) {
 	});
 
 	// Grab namespace for shimming encapsulated module return value.
-	var namespace = /\{namespace\s+([^\s]+).*\}/.exec(source)[1];
+	var extracted = /\{namespace\s+((\w+)[^\s]*).*\}/.exec(source);
+	var namespace = extracted[1];
+	var baseVar = extracted[2]
 	var tempDir = path.resolve(__dirname, [
 		'soytemp', // directory prefix
 		Date.now(), // datestamp
@@ -70,7 +72,7 @@ module.exports = function(source) {
 				'var soyshim = ' + runtimeUtils + '.soyshim;',
 
 				// Shims for encapsulating the compiled template.
-				'var ' + namespace + ';',
+				'var ' + baseVar + ';',
 				template,
 				'module.exports = ' + namespace + ';'
 
