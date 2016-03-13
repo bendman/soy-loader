@@ -32,7 +32,7 @@ module.exports = function(source) {
 	});
 
 	// Grab namespace for shimming encapsulated module return value.
-	var namespace = /\{namespace\s+(\w+)/.exec(source)[1];
+	var namespace = /\{namespace\s+([^\s]+).*\}/.exec(source)[1];
 	var tempDir = path.resolve(__dirname, [
 		'soytemp', // directory prefix
 		Date.now(), // datestamp
