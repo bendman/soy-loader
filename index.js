@@ -19,7 +19,7 @@ module.exports = function(source) {
 	// Get the configurable source of the soy runtime utilities, or use default.
 	var runtimeUtils = require.resolve(query.utils || closureTemplates['soyutils.js']);
 	// Create a require statement to be injected into the templates for shimming.
-	runtimeUtils = 'require(\'exports?goog,soy,soydata,soyshim!' + runtimeUtils + '\')';
+	runtimeUtils = 'require(\'exports-loader?goog,soy,soydata,soyshim!' + runtimeUtils + '\')';
 	runtimeUtils = runtimeUtils.replace(/\\/g, '\\\\');
 
 	this.addDependency(require.resolve(closureTemplates['soyutils.js']));
