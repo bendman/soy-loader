@@ -13,6 +13,7 @@ module.exports = function(source) {
 	if (this.cacheable) this.cacheable();
 	var loaderCallback = this.async();
 	var query = this.query instanceof Object ? this.query : loaderUtils.parseQuery(this.query);
+	var inputDir = query.inputDir ? (query.inputDir instanceof String ? query.inputDir : ""+query.inputDir) : process.cwd();
 	var classpath = query.classpath ? (query.classpath instanceof Array ? query.classpath : [query.classpath]) : [];
 	var pluginModules = query.pluginModules ? (query.pluginModules instanceof Array ? query.pluginModules : [query.pluginModules]) : [];
 
@@ -24,6 +25,7 @@ module.exports = function(source) {
 
 	this.addDependency(require.resolve(closureTemplates['soyutils.js']));
 	soynode.setOptions({
+		inputDir: inputDir,
 		outputDir: '/',
 		uniqueDir: false,
 		eraseTemporaryFiles: false,
